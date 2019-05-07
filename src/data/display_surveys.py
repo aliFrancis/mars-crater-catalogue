@@ -1,0 +1,60 @@
+import matplotlib.pyplot as plt
+import os
+from matplotlib.collections import EllipseCollection
+
+def display_surveys(img,surveys,contrast_factor=None,alpha=0.3):
+    fig,ax=plt.subplots()
+    if contrast_factor is not None:
+        img = img.astype('float')
+        img = (img-img.mean())*contrast_factor/(img.max()-img.min())+0.4
+        ax.imshow(img,cmap='gray',vmin=0,vmax=1)
+    else:
+        ax.imshow(img,cmap='gray')
+    cols = ['tab:red','tab:blue','tab:green','tab:cyan','tab:orange','tab:olive','tab:brown']
+    for ind,survey in enumerate(surveys):
+        colour = cols[ind]
+        diffs = survey['diff'].values.astype('bool')
+        not_diffs = (1-diffs).astype('bool')
+        ec = EllipseCollection(widths=survey['D'].values[not_diffs],heights=survey['D'].values[not_diffs],angles=0,units='xy',
+                                offsets = list(zip(survey['y'].values[not_diffs],survey['x'].values[not_diffs])),
+                                transOffset=ax.transData,facecolors='None',edgecolors = colour,
+                                alpha=alpha)
+        ec_diff = EllipseCollection(widths=survey['D'].values[diffs],heights=survey['D'].values[diffs],angles=0,units='xy',
+                                offsets = list(zip(survey['y'].values[diffs],survey['x'].values[diffs])),
+                                transOffset=ax.transData,facecolors='None',edgecolors = colour, linestyle=':',
+                                alpha=alpha)
+        ax.add_collection(ec)
+        ax.add_collection(ec_diff)
+        print('{:>7}: {:>8} - {} markings'.format(os.path.split(survey['surveyor'].values[0])[-1],colour[4:],len(survey['D'].values)))
+
+
+    fig.tight_layout()
+    plt.show(block=True)
+
+
+if __name__=='__main__':
+    #import survey as numpy array
+    import os
+    import sys
+    from skimage.io import imread
+    import surveyxml2df as sx2df
+
+
+    img_path = sys.argv[1]
+    img = imread(img_path)
+    xml_dir = sys.argv[2]
+
+    if len(sys.argv)>3:
+        contrast_factor = float(sys.argv[3])
+    else:
+        contrast_factor=None
+    if len(sys.argv)>4:
+        alpha = float(sys.argv[4])
+    else:
+        alpha=0.3
+    if os.path.isfile(xml_dir):
+        dfs = [sx2df.surveyxml2df(xml_dir)]
+    else:
+        dfs = [sx2df.surveyxml2df(os.path.join(xml_dir,s_i)) for s_i in os.listdir(xml_dir)]
+
+    display_surveys(img,dfs,contrast_factor=contrast_factor,alpha=alpha)
