@@ -9,10 +9,10 @@ from matplotlib.collections import EllipseCollection
 import sys
 from skimage.io import imread
 import ast
+import numpy as np
 
 
-
-def surveyxml2df(xml_path,surveyor=None, out_csv_path=None, min_D = 0, max_D = float('inf')):
+def xml2df(xml_path,surveyor=None, out_csv_path=None, min_D = 0, max_D = float('inf')):
     tree = ET.parse(xml_path)
     root = tree.getroot()
 
@@ -47,6 +47,40 @@ def surveyxml2df(xml_path,surveyor=None, out_csv_path=None, min_D = 0, max_D = f
         df.to_csv(out_csv_path)
     return df
 
+def dfs2df(dfs):
+    return pd.concat(dfs)
+
+def clusters2np(clusters,surveys):
+    if isinstance(surveys,list) or isinstance(surveys,pd.DataFrame):
+        surveys,_ = df2np(surveys)
+    rep = []
+    for cluster in clusters:
+        cluster_points = surveys[cluster,...]
+        x = np.mean(cluster_points[:,2])
+        y = np.mean(cluster_points[:,3])
+        D = np.mean(cluster_points[:,4])
+        rep.append([x,y,D])
+
+    return np.array(rep)
+
+def df2np(df):
+    if isinstance(df,list):
+        df = pd.concat(df)
+
+    surveyor_list = np.unique(df.surveyor.values)
+    surveyor_table = dict()
+    for i,surveyor in enumerate(surveyor_list):
+        surveyor_table[surveyor] = i
+
+    d = {'surveyor':[],'ID':[],'x':[],'y':[],'D':[],'diff':[]}
+
+    arr = df.values
+    for i in range(len(arr)):
+        arr[i][0] = surveyor_table[arr[i][0]]
+    arr = arr.astype(np.float)
+    return arr,surveyor_table
+
+
 
 if __name__=='__main__':
     #import survey as numpy array
@@ -54,7 +88,7 @@ if __name__=='__main__':
     import argparse
     import display_surveys as disp
 
-    
+
     parser = argparse.ArgumentParser(description='Converts many xml annotations into single pandas DataFrame, then displays')
     parser.add_argument('img_path', help='Path to image file')
     parser.add_argument('xml_dir', help='Path to directory with xml files')
@@ -70,7 +104,7 @@ if __name__=='__main__':
 
     dfs = []
     if os.path.isfile(xml_dir):
-        dfs = [surveyxml2df(xml_dir)]
+        dfs = [xml2df(xml_dir)]
     else:
-        dfs = [surveyxml2df(s_i) for s_i in os.listdir(xml_dir)]
+        dfs = [xml2df(s_i) for s_i in os.listdir(xml_dir)]
     disp.display_surveys(img,dfs,contrast_factor=contrast,alpha=alpha)

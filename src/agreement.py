@@ -3,6 +3,10 @@ import pandas as pd
 import seaborn as sn
 
 
+def
+
+
+
 
 
 if __name__ == '__main__':
@@ -10,13 +14,13 @@ if __name__ == '__main__':
     import sys
 
     import iou
-    from data import surveyxml2df as sx2df
+    from data import convert
     import matplotlib.pyplot as plt
 
     survey_dir = sys.argv[1]
     surveys = [os.path.join(survey_dir,path) for path in os.listdir(survey_dir)]
     survey_names = [s_i[-6:] for s_i in surveys]
-    surveys = [sx2df.surveyxml2df(s_i) for s_i in surveys]
+    surveys = [convert.xml2df(s_i) for s_i in surveys]
     for id,survey in zip(survey_names,surveys):
         print('{:>8}: {:>5}'.format(id,len(survey)))
 
