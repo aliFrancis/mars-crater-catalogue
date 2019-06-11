@@ -10,6 +10,7 @@ import sys
 from skimage.io import imread
 import ast
 import numpy as np
+import math
 
 
 def xml2df(xml_path,surveyor=None, out_csv_path=None, min_D = 0, max_D = float('inf')):
@@ -48,7 +49,7 @@ def xml2df(xml_path,surveyor=None, out_csv_path=None, min_D = 0, max_D = float('
     return df
 
 def dfs2df(dfs):
-    return pd.concat(dfs)
+    return pd.concat(dfs,ignore_index=True)
 
 def clusters2np(clusters,surveys):
     if isinstance(surveys,list) or isinstance(surveys,pd.DataFrame):
@@ -59,7 +60,8 @@ def clusters2np(clusters,surveys):
         x = np.mean(cluster_points[:,2])
         y = np.mean(cluster_points[:,3])
         D = np.mean(cluster_points[:,4])
-        rep.append([x,y,D])
+        N = len(cluster)
+        rep.append([x,y,D,N])
 
     return np.array(rep)
 
@@ -79,6 +81,81 @@ def df2np(df):
         arr[i][0] = surveyor_table[arr[i][0]]
     arr = arr.astype(np.float)
     return arr,surveyor_table
+
+
+def clusters2PASCAL_VOC(clusters,surveys,img_name,out_dir=None):
+    """
+    Converts list of clusters and parent image into an xml, in pascal VOC format
+    """
+    if isinstance(surveys,list) or isinstance(surveys,pd.DataFrame):
+        surveys,surveyors = df2np(surveys)
+
+    annotation = ET.Element('annotation')
+    filename = ET.SubElement(annotation,'filename')
+    source = ET.SubElement(annotation,'source')
+    so_database = ET.SubElement(source,'database')
+    so_annotation = ET.SubElement(source,'annotation')
+    so_image = ET.SubElement(source,'image')
+
+    size = ET.SubElement(annotation,'size')
+    si_width = ET.SubElement(size,'width')
+    si_height = ET.SubElement(size,'height')
+    si_depth = ET.SubElement(size,'depth')
+
+    segmented = ET.SubElement(annotation,'segmented')
+
+    filename.text = img_name
+    so_database.text = 'MSSL ORBYTS MCC'
+    so_annotation.text = 'MSSL ORBYTS'
+    so_image.text = 'NASA CTX / iMars'
+
+    si_width.text = '2000'
+    si_height.text = '2000'
+    si_depth.text = '1'
+
+    segmented.text = '0'
+
+    cluster_vals = clusters2np(clusters,surveys)
+    for i,cluster in enumerate(clusters):
+        object = ET.SubElement(annotation,'object')
+        name = ET.SubElement(object,'name')
+        pose = ET.SubElement(object,'pose')
+        truncated = ET.SubElement(object,'truncated')
+        occluded = ET.SubElement(object,'occluded')
+        bndbox = ET.SubElement(object,'bndbox')
+        xmin = ET.SubElement(bndbox,'xmin')
+        ymin = ET.SubElement(bndbox,'ymin')
+        xmax = ET.SubElement(bndbox,'xmax')
+        ymax = ET.SubElement(bndbox,'ymax')
+        difficult = ET.SubElement(object,'difficult')
+
+        y_centre,x_centre,D,N = cluster_vals[i,...]
+
+        xmin_val = int(round(x_centre-0.5*D))
+        ymin_val = int(round(y_centre-0.5*D))
+        xmax_val = int(round(x_centre+0.5*D))
+        ymax_val = int(round(y_centre+0.5*D))
+
+        name.text = 'crater'
+        pose.text = 'frontal'
+        truncated.text = '0'
+        occluded.text = '0'
+        xmin.text = str(xmin_val)
+        ymin.text = str(ymin_val)
+        xmax.text = str(xmax_val)
+        ymax.text = str(ymax_val)
+        difficult.text = str(int(N==1)) #Marked difficult if only one annotator in cluster
+
+
+    data = ET.tostring(annotation,encoding='unicode')
+    if out_dir is None:
+        xmlfile = open("{}.xml".format(img_name[:-4]), "w")
+    else:
+        xmlfile = open("{}/{}.xml".format(out_dir,img_name[:-4]), "w")
+    print(data)
+    print(type(data))
+    xmlfile.write(str(data))
+    return data
 
 
 
