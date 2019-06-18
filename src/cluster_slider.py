@@ -4,6 +4,7 @@ from matplotlib.widgets import Slider, Button, RadioButtons
 from matplotlib.collections import EllipseCollection
 import matplotlib.cm
 import matplotlib.artist
+
 import cluster_surveys
 from data import convert
 import distance
@@ -19,8 +20,11 @@ def get_update_func(nodelist,surveys):
         cols[:,-1] = 0.05+colour_intensity/15
         centres = convert.clusters2np(clusters,surveys)
         cluster_ec = EllipseCollection(widths=centres[:,2],heights=centres[:,2],angles=0,units='xy',
-                                offsets = list(zip(centres[:,1],centres[:,0])),
-                                transOffset=ax_main.transData,facecolors=cols,edgecolors = cols, linewidth=1)
+                                        offsets = list(zip(centres[:,1],centres[:,0])),
+                                        transOffset=ax_main.transData,
+                                        facecolors=cols,
+                                        edgecolors = cols,
+                                        linewidth=1)
         del ax_main.collections[0]
         ax_main.add_collection(cluster_ec)
         ax_hist.clear()
