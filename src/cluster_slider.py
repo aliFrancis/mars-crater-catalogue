@@ -91,5 +91,4 @@ if __name__=='__main__':
     vis_button = Button(vis_ax, 'Set visibility', color=axcolor, hovercolor='0.975')
     vis_button.on_clicked(toggle_vis)
 
-
     plt.show()
