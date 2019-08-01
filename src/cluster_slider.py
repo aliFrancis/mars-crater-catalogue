@@ -29,6 +29,11 @@ def get_update_func(nodelist,surveys):
             patch.set_facecolor(color=cmp(i/N_surveyors))
         print(len(clusters),'    ',end='\r')
         ax_hist.grid(True)
+
+        ax_size_hist.clear()
+        ax_size_hist.hist(centres[:,2],[2*i for i in range(int((centres[:,2].max()+2)/2))],rwidth=0.8,log=True)
+        ax_size_hist.grid(True)
+
         fig.canvas.draw_idle()
 
     return update
@@ -68,22 +73,28 @@ if __name__=='__main__':
     ax_main.add_collection(cluster_ec)
     axcolor = 'lightgoldenrodyellow'
 
-    ax_hist = plt.axes([0.05,0.05,0.18,0.6])
+    ax_hist = plt.axes([0.05,0.05,0.18,0.3])
+    ax_hist.set_title('Cluster sizes')
     n,bins,patches = ax_hist.hist([len(cluster) for cluster in clusters],[0.5+i for i in range(N_surveyors+1)],rwidth=0.4)
     for i,patch in enumerate(patches):
         patch.set_facecolor(color=cmp(i/N_surveyors))
     ax_hist.grid(True)
+
+    ax_size_hist = plt.axes([0.05,0.45,0.18,0.3])
+    ax_size_hist.set_title('Diameters')
+    ax_size_hist.hist(centres[:,2],[2*i for i in range(int((centres[:,2].max()+2)/2))],rwidth=0.8,log=True)
+    ax_size_hist.grid(True)
 
     ax_dist = plt.axes([0.35, 0.05, 0.5, 0.02], facecolor=axcolor)
     sdist = Slider(ax_dist, 'Max Dist', 0, 1, valinit=dist)
 
     sdist.on_changed(get_update_func(nodelist,surveys))
 
-    reset_ax = plt.axes([0.05, 0.8, 0.1, 0.05])
+    reset_ax = plt.axes([0.05, 0.9, 0.1, 0.05])
     reset_button = Button(reset_ax, 'Reset', color=axcolor, hovercolor='0.975')
     reset_button.on_clicked(reset)
 
-    vis_ax = plt.axes([0.05, 0.7, 0.1, 0.05])
+    vis_ax = plt.axes([0.05, 0.85, 0.1, 0.05])
     vis_button = Button(vis_ax, 'Set visibility', color=axcolor, hovercolor='0.975')
     vis_button.on_clicked(toggle_vis)
 
