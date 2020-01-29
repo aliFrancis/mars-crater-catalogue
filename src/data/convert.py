@@ -41,9 +41,16 @@ def xml2df(xml_path,surveyor=None, out_csv_path=None, min_D = 0, max_D = float('
                     D_ = ymax-ymin
                     if min_D < D and D < max_D:
                         i+=1
-                        df_line = pd.DataFrame(data = {'surveyor':[surveyor],'ID':[str(i).zfill(4)],'x':[x],'y':[y],'D':[D],'diff':[diff]})
+                        df_line = pd.DataFrame(data = {
+                                                'surveyor':[surveyor],
+                                                'ID':[str(i).zfill(4)],
+                                                'x':[x],
+                                                'y':[y],
+                                                'D':[D],
+                                                'diff':[diff]
+                                                })
                         df = pd.concat((df,df_line))
-
+    df = df[['surveyor','ID','x','y','D','diff']]
     if out_csv_path:
         df.to_csv(out_csv_path)
     return df
@@ -128,6 +135,7 @@ def clusters2PASCAL_VOC(clusters,surveys,img_name,out_dir=None):
         xmax = ET.SubElement(bndbox,'xmax')
         ymax = ET.SubElement(bndbox,'ymax')
         difficult = ET.SubElement(object,'difficult')
+        confidence = ET.SubElement(object,'confidence')
 
         y_centre,x_centre,D,N = cluster_vals[i,...]
 
@@ -145,15 +153,14 @@ def clusters2PASCAL_VOC(clusters,surveys,img_name,out_dir=None):
         xmax.text = str(xmax_val)
         ymax.text = str(ymax_val)
         difficult.text = str(int(N==1)) #Marked difficult if only one annotator in cluster
+        confidence.text = str(len(cluster))
 
 
     data = ET.tostring(annotation,encoding='unicode')
     if out_dir is None:
-        xmlfile = open("{}.xml".format(img_name[:-4]), "w")
+        xmlfile = open("{}.xml".format(img_name), "w")
     else:
-        xmlfile = open("{}/{}.xml".format(out_dir,img_name[:-4]), "w")
-    print(data)
-    print(type(data))
+        xmlfile = open("{}/{}.xml".format(out_dir,img_name), "w")
     xmlfile.write(str(data))
     return data
 

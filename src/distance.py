@@ -32,7 +32,7 @@ def scaled_3D(point1,point2):
 
 def negative_jaccard(point1,point2):
     """
-    Calculates 1 - amount of overlap as fraction of total union area of two craters
+    Calculates (1 - amount) of overlap as fraction of total union area of two craters
     """
     if point1[0] == point2[0]:
         return 999999999.
@@ -60,7 +60,7 @@ def negative_jaccard(point1,point2):
 
 def negative_jaccard_with_diameter_priority(point1,point2):
     """
-    Calculates 1 - amount of overlap as fraction of total union area of two craters
+    Calculates (1 - amount) of overlap as fraction of total union area of two craters,
     then multiplies by relative size difference of circles.
     """
     if point1[0] == point2[0]:
@@ -89,7 +89,7 @@ def negative_jaccard_with_diameter_priority(point1,point2):
 
 def negative_jaccard_plus_distance(point1,point2):
     """
-    Calculates 1 - amount of overlap as fraction of total union area of two craters, if overlap is
+    Calculates (1 - amount) of overlap as fraction of total union area of two craters, if overlap is
     zero then distance defined by flat_2D distance between centres, normalised by (r1+r2)
     """
     if point1[0] == point2[0]:

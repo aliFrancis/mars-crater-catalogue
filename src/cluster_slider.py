@@ -55,8 +55,9 @@ if __name__=='__main__':
     from skimage.io import imread
 
     img_path = sys.argv[1]
-    img = imread(img_path)
     xml_dir = sys.argv[2]
+
+    img = imread(img_path)
     surveys = [convert.xml2df(os.path.join(xml_dir,s_i)) for s_i in os.listdir(xml_dir)]
     N_surveyors = len(surveys)
     nodelist = cluster_surveys.agglomerative(surveys,distance.negative_jaccard)

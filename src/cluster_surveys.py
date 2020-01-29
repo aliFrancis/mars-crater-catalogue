@@ -47,10 +47,40 @@ def agglomerative(surveys,dist_metric):
 
 
 if __name__=='__main__':
-    import sys
     import os
+    import argparse
 
-    xml_dir = sys.argv[1]
-    assert os.path.isdir(xml_dir), 'xml_dir is not a directory!'
-    dfs = [convert.xml2df(os.path.join(xml_dir,s_i)) for s_i in os.listdir(xml_dir)]
-    nodes = agglomerative(dfs, distance.scaled_3D)
+    parser = argparse.ArgumentParser(description='Combines annotations across whole dataset using agglomerative clustering.')
+    parser.add_argument('annotation_dir', help='Directory with xml files')
+    parser.add_argument('output_dir', help='Directory for outputted xmls')
+    parser.add_argument('-d','--distance_metric', type=str, help='Distance function (defined in distance.py)', default=distance.negative_jaccard)
+    parser.add_argument('-t','--threshold', type=float, help='Distance threshold at which to cluster', default=0.9)
+    args = vars(parser.parse_args())
+
+    annotation_dir = args['annotation_dir']
+    output_dir  = args['output_dir']
+    distance_metric = args['distance_metric']
+    if isinstance(distance_metric,str):
+        try:
+            distance_metric = getattr(distance,distance_metric)
+        except AttributeError:
+            'distance metric not recognised'
+    threshold = args['threshold']
+
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    annotation_register = {}
+    for root,dirs,paths in os.walk(annotation_dir):
+        for path in paths:
+            if path.endswith('.xml'):
+                image = os.path.basename(root)
+                if not image in annotation_register.keys():
+                    annotation_register[image] = [os.path.join(root,path)]
+                else:
+                    annotation_register[image].append(os.path.join(root,path))
+    for image_name,files in annotation_register.items():
+        df = [convert.xml2df(file) for file in files]
+        nodes = agglomerative(df,distance.negative_jaccard)
+        clusters = clusters_at_distance(nodes,threshold)
+        xml_out = convert.clusters2PASCAL_VOC(clusters,df,image_name,out_dir=output_dir)

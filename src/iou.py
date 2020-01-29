@@ -11,14 +11,14 @@ def iou(crater1,crater2):
         D1 = crater1['D']
     elif isinstance(crater1,type(np.ndarray(None))):
         [x1,y1,D1] = crater1[2:5].astype(float)
-    elif isinstance(crater1,(list,tuple)).any():
+    elif isinstance(crater1,(list,tuple)):
         [x1,y1,D1] = np.array(crater1[0:3]).astype(float)
     r1 = D1/2
     if isinstance(crater2,type(pd.DataFrame())):
         [x2,y2,D2] = crater2.values.astype(float)
     elif isinstance(crater2,type(np.ndarray(None))):
         [x2,y2,D2] = crater2[2:5].astype(float)
-    elif isinstance(crater2,(list,tuple)).any():
+    elif isinstance(crater2,(list,tuple)):
         [x2,y2,D2] = np.array(crater2[0:3]).astype(float)
     r2 = D2/2
 
