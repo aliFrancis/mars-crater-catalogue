@@ -5,8 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from data import convert
-import distance
+from utils import convert, distance
 
 
 def clusters_at_distance(nodelist,max_distance):

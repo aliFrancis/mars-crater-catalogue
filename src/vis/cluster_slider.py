@@ -6,7 +6,8 @@ import matplotlib.cm
 import matplotlib.artist
 
 import cluster_surveys
-from utils import convert, distance
+from data import convert
+import distance
 
 
 def get_update_func(nodelist,surveys):
@@ -34,7 +35,7 @@ def get_update_func(nodelist,surveys):
         ax_hist.grid(True)
 
         ax_size_hist.clear()
-        ax_size_hist.hist(centres[:,2],[2*i for i in range(int((centres[:,2].max()+2)/2))],rwidth=0.8,log=True)
+        ax_size_hist.hist(centres[:,2],[5*i for i in range(int((centres[:,2].max()+5)/5))],rwidth=0.8,log=True)
         ax_size_hist.grid(True)
 
         fig.canvas.draw_idle()
@@ -54,9 +55,8 @@ if __name__=='__main__':
     from skimage.io import imread
 
     img_path = sys.argv[1]
-    xml_dir = sys.argv[2]
-
     img = imread(img_path)
+    xml_dir = sys.argv[2]
     surveys = [convert.xml2df(os.path.join(xml_dir,s_i)) for s_i in os.listdir(xml_dir)]
     N_surveyors = len(surveys)
     nodelist = cluster_surveys.agglomerative(surveys,distance.negative_jaccard)
@@ -86,7 +86,7 @@ if __name__=='__main__':
 
     ax_size_hist = plt.axes([0.05,0.45,0.18,0.3])
     ax_size_hist.set_title('Diameters')
-    ax_size_hist.hist(centres[:,2],[2*i for i in range(int((centres[:,2].max()+2)/2))],rwidth=0.8,log=True)
+    ax_size_hist.hist(centres[:,2],[5*i for i in range(int((centres[:,2].max()+5)/5))],rwidth=0.8,log=True)
     ax_size_hist.grid(True)
 
     ax_dist = plt.axes([0.35, 0.05, 0.5, 0.02], facecolor=axcolor)
