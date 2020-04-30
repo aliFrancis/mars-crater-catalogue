@@ -20,14 +20,18 @@ def xml2df(xml_path,surveyor=None, out_csv_path=None, min_D = 0, max_D = float('
     if surveyor==None:
         surveyor = xml_path
 
-    d = {'surveyor':[],'ID':[],'x':[],'y':[],'D':[],'diff':[]}
+    d = {'surveyor':[],'ID':[],'x':[],'y':[],'D':[],'diff':[],'conf':[]}
     df = pd.DataFrame(data = d)
     i = 0
     for child in root:
         if child.tag == 'object':
+            diff = None
+            conf = None
             for grandchild in child:
                 if grandchild.tag == 'difficult':
                     diff = int(grandchild.text)
+                if grandchild.tag == 'confidence':
+                    conf = int(grandchild.text)
                 if grandchild.tag == 'bndbox':
 
                     ymin = float(grandchild[0].text)
@@ -39,18 +43,23 @@ def xml2df(xml_path,surveyor=None, out_csv_path=None, min_D = 0, max_D = float('
                     y = (ymin+ymax)/2
                     D = xmax-xmin
                     D_ = ymax-ymin
-                    if min_D < D and D < max_D:
-                        i+=1
-                        df_line = pd.DataFrame(data = {
-                                                'surveyor':[surveyor],
-                                                'ID':[str(i).zfill(4)],
-                                                'x':[x],
-                                                'y':[y],
-                                                'D':[D],
-                                                'diff':[diff]
-                                                })
-                        df = pd.concat((df,df_line))
-    df = df[['surveyor','ID','x','y','D','diff']]
+            if min_D <= D and D <= max_D:
+                i+=1
+                df_line = pd.DataFrame(data = {
+                                        'surveyor':[surveyor],
+                                        'ID':[str(i).zfill(4)],
+                                        'x':[x],
+                                        'y':[y],
+                                        'D':[D],
+                                        'diff':[diff],
+                                        'conf':[conf]
+                                        })
+                df = pd.concat((df,df_line))
+    df = df[['surveyor','ID','x','y','D','diff','conf']]
+    if all(d is None for c in df['diff']):
+        del df['diff']
+    if all(c is None for c in df['conf']):
+        del df['conf']
     if out_csv_path:
         df.to_csv(out_csv_path)
     return df
@@ -163,32 +172,3 @@ def clusters2PASCAL_VOC(clusters,surveys,img_name,out_dir=None):
         xmlfile = open("{}/{}.xml".format(out_dir,img_name), "w")
     xmlfile.write(str(data))
     return data
-
-
-
-if __name__=='__main__':
-    #import survey as numpy array
-    import os
-    import argparse
-    import display_surveys as disp
-
-
-    parser = argparse.ArgumentParser(description='Converts many xml annotations into single pandas DataFrame, then displays')
-    parser.add_argument('img_path', help='Path to image file')
-    parser.add_argument('xml_dir', help='Path to directory with xml files')
-    parser.add_argument('-c','--contrast',type=float, help='Factor for contrast readjustment', default=1.)
-    parser.add_argument('-a','--alpha', type=float,help='Opacity of annotations in plot', default=0.5)
-    args = vars(parser.parse_args())
-    img_path = args['img_path']
-    xml_dir  = args['xml_dir']
-    contrast = args['contrast']
-    alpha    = args['alpha']
-
-    img = imread(img_path)
-
-    dfs = []
-    if os.path.isfile(xml_dir):
-        dfs = [xml2df(xml_dir)]
-    else:
-        dfs = [xml2df(s_i) for s_i in os.listdir(xml_dir)]
-    disp.display_surveys(img,dfs,contrast_factor=contrast,alpha=alpha)

@@ -55,11 +55,15 @@ if __name__=='__main__':
 
     img_path = sys.argv[1]
     xml_dir = sys.argv[2]
+    if len(sys.argv)>3:
+        distance_metric = getattr(distance,sys.argv[3])
+    else:
+        distance_metric = distance.negative_jaccard
 
     img = imread(img_path)
     surveys = [convert.xml2df(os.path.join(xml_dir,s_i)) for s_i in os.listdir(xml_dir)]
     N_surveyors = len(surveys)
-    nodelist = cluster_surveys.agglomerative(surveys,distance.negative_jaccard)
+    nodelist = cluster_surveys.agglomerative(surveys,distance_metric)
     fig= plt.figure()
     ax_main = plt.axes([0.2,0.12,0.75,0.75])
     dist = 0.5

@@ -113,17 +113,3 @@ def negative_jaccard_plus_distance(point1,point2):
         return flat_2D(point1,point2)/(r1+r2)
 
     return 1 - A/(math.pi*math.pow(r1,2)+math.pi*math.pow(r2,2)-A)
-
-
-
-if __name__ == '__main__':
-    testp1 = [0,103,64,64,4]
-    testp2 = [0,103,64,64,8]
-    testp3 = [1,103,64,64,4]
-    testp4 = [1,103,64,64,8]
-
-    print('1, 2: ',negative_jaccard(testp1,testp2))
-    print('1, 3: ',negative_jaccard(testp1,testp3))
-    print('1, 4: ',negative_jaccard(testp1,testp4))
-    print('2, 3: ',negative_jaccard(testp2,testp3))
-    print('2, 4: ',negative_jaccard(testp2,testp4))

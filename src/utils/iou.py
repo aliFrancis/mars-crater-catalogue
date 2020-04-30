@@ -39,6 +39,9 @@ def iou(crater1,crater2):
 
 
 def all_ious(survey1,survey2):
+    """
+    Calculates IOU between each entry in two surveys, returning as matrix
+    """
     if isinstance(survey1,type(pd.DataFrame())):
         survey1 = survey1.values
     if isinstance(survey2,type(pd.DataFrame())):
@@ -49,24 +52,3 @@ def all_ious(survey1,survey2):
         for j,survey2_j in enumerate(survey2):
             results[i,j] = iou(survey1_i,survey2_j)
     return results
-
-if __name__=='__main__':
-    import sys
-    import matplotlib.pyplot as plt
-
-    from data import surveyxml2df as sx2df
-
-
-    survey1 = sys.argv[1]
-    survey2 = sys.argv[2]
-
-    df1 = sx2df.surveyxml2df(survey1)
-    df2 = sx2df.surveyxml2df(survey2)
-
-    iou_mat = all_ious(df1,df2)
-    plt.hist(iou_mat.flatten(),bins=[i/25 for i in range(1,26)])
-    plt.show()
-
-    iou_max = np.max(iou_mat,axis=0)
-    plt.hist(iou_max,bins=25)
-    plt.show()

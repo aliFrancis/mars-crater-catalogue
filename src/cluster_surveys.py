@@ -79,7 +79,7 @@ if __name__=='__main__':
                 else:
                     annotation_register[image].append(os.path.join(root,path))
     for image_name,files in annotation_register.items():
-        df = [convert.xml2df(file) for file in files]
+        df = [convert.xml2df(file,min_D=5) for file in files]
         nodes = agglomerative(df,distance.negative_jaccard)
         clusters = clusters_at_distance(nodes,threshold)
         xml_out = convert.clusters2PASCAL_VOC(clusters,df,image_name,out_dir=output_dir)
