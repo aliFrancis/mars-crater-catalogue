@@ -1,12 +1,9 @@
 import numpy as np
 import os
 
-from data import convert
+from utils import convert, distance, iou
 import cluster_slider
 import cluster_surveys
-import distance
-import iou
-
 
 def load_all_surveys(xml_master_dir):
     assert os.path.isdir(xml_master_dir), 'xml_dir is not a directory!'
@@ -55,14 +52,14 @@ def each_cluster_size_against_diameter_plot(clusters,surveys):
             diams[n-1] += list(centres_on_tile_of_size[:,2])
 
     fig,ax = plt.subplots()
-    diams = [diams[0],diams[1]+diams[2],diams[3]+diams[4],diams[5]]
+    diams = [diams[0],diams[1]+diams[2]+diams[3]+diams[4],diams[5]]
     for n in range(len(diams)):
         ys,bins,patches = ax.hist(diams[n],[i for i in range(180)],rwidth=0.8,log=True,color=cols[n],alpha=0.)
         xs = bins[:-1]+np.diff(bins)/2
         smooth_ys = np.array([np.power(10,np.mean(np.log10(0.2+ys[max(0,i-3):min(len(ys),i+4)]))) for i in range(len(ys))])
         smoother_ys = np.array([np.mean(ys[max(0,i-12):min(len(ys),i+13)]) for i in range(len(ys))])
         ax.plot(xs[2:81],smooth_ys[2:81],alpha=0.8,c=cols[n])
-        ax.plot(xs[80:120],smooth_ys[80:120],alpha=0.7,c=cols[n],linestyle='--')
+        ax.plot(xs[80:120],smooth_ys[80:120],alpha=0.7,c=cols[n],linestyle='--',linewidth=2)
     ax.grid(True)
     plt.show()
 
@@ -80,20 +77,23 @@ if __name__=='__main__':
 
     ###CLUSTERING
     nodes = calc_all_nodetrees(dfs,distance.negative_jaccard)
-    d=0.8
+    d=0.9
     clusters = []
     for nodes_in_tile in nodes:
         clusters.append(cluster_surveys.clusters_at_distance(nodes_in_tile,d))
     each_cluster_size_against_diameter_plot(clusters,dfs)
+
+
+
     # dists = [0.+0.99*i for i in range(10)]
     # clusters = []
     # n_clusters = np.empty([len(dists),len(nodes)])
     # n_singles = np.empty([len(dists),len(nodes)])
     # n_multi = np.empty([len(dists),len(nodes)])
+    # #
     #
-
-
-
+    #
+    #
     # for i,d in enumerate(dists):
     #     clusters_at_d = []
     #     diameters_at_d = []
@@ -106,8 +106,9 @@ if __name__=='__main__':
     #         n_multi[i,j] = len([c for c in clusters_at_d[j] if len(c)>1])
     #         diameters_at_d += list(centres[:,2])
     #     fig,ax=plt.subplots()
-    #     ax.hist(diameters_at_d,[i for i in range(150)],rwidth=0.8,log=True)
+    #     ax.hist(diameters_at_d,[k for k in range(150)],rwidth=0.8,log=True,label=str(i))
     #     ax.grid(True)
+    #     ax.legend()
     #     plt.show()
     #     clusters.append(clusters_at_d)
     #

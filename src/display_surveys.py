@@ -18,7 +18,7 @@ def display_surveys(img,surveys,contrast_factor=None,alpha=0.3,plotting=True):
         colour = cols[ind]
         ec = EllipseCollection(widths=survey['D'].values,heights=survey['D'].values,angles=0,units='xy',
                                 offsets = list(zip(survey['y'].values,survey['x'].values)),
-                                transOffset=ax.transData,facecolors='None',edgecolors = colour,linewidth=2,
+                                transOffset=ax.transData,facecolors='None',edgecolors = colour,linewidth=1.2,
                                 alpha=alpha)
         ecs.append(ec)
         if plotting:
