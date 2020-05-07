@@ -1,7 +1,3 @@
-"""
-script to take a LabelImg output xml, and the set of craters it corresponds to,
-and make an array documenting TP and FP craters with their localisation errors.
-"""
 import pandas as pd
 import xml.etree.ElementTree as ET
 import matplotlib.pyplot as plt

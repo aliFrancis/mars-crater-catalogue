@@ -83,11 +83,6 @@ if __name__ == '__main__':
     print('  TOTAL :',len(total_survey))
     print('\n')
 
-    # binary_IOU_mat,mean_IOU_mat = pairwise_IOU_matrices(paths)
-    #
-    # print(average_pairwise_IOU(binary_IOU_mat))
-    # print(average_pairwise_IOU(mean_IOU_mat))
-
     group_binary_IOUs, group_IOUs = group_IOU_matrices(paths)
     print('GROUP BINARY')
     print(group_binary_IOUs)

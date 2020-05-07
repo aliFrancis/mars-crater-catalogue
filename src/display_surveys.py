@@ -39,7 +39,7 @@ if __name__=='__main__':
 
     img_path = sys.argv[1]
     img = imread(img_path)
-    xml_dir = sys.argv[2]
+    xml_dir = sys.argv[2] #either directory of xml files, or single xml file
 
     if len(sys.argv)>3:
         contrast_factor = float(sys.argv[3])
