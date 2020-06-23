@@ -84,9 +84,9 @@ if __name__ == '__main__':
     print('\n')
 
     group_binary_IOUs, group_IOUs = group_IOU_matrices(paths)
-    print('GROUP BINARY')
-    print(group_binary_IOUs)
-    print(np.mean(group_binary_IOUs))
-    print('GROUP MEAN')
+    print('MEAN IoU')
     print(group_IOUs)
     print(np.mean(group_IOUs))
+    print('MEAN BINARY IoU (IoU treated as 1 if above 0.5)')
+    print(group_binary_IOUs)
+    print(np.mean(group_binary_IOUs))
