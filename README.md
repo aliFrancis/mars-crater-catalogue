@@ -32,4 +32,4 @@ All commands below generally assume you are in the root directory of the project
 
 ## Credits and Contributions
 
-If you found this resource useful in your own work, please cite our paper: <DOI to be added>
+If you found this resource useful in your own work, please cite our upcoming paper, link tbc
