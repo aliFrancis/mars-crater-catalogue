@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from scipy.spatial.distance import cdist
 
 def iou(crater1,crater2):
     """
@@ -51,4 +52,16 @@ def all_ious(survey1,survey2):
     for i,survey1_i in enumerate(survey1):
         for j,survey2_j in enumerate(survey2):
             results[i,j] = iou(survey1_i,survey2_j)
+    return results
+
+def all_ious_np(survey1,survey2):
+    """
+    Calculates IOU between each entry in two surveys, returning as matrix, using cdist
+    """
+    if isinstance(survey1,type(pd.DataFrame())):
+        survey1 = survey1.values
+    if isinstance(survey2,type(pd.DataFrame())):
+        survey2 = survey2.values
+
+    results = cdist(survey1,survey2,metric=iou)
     return results

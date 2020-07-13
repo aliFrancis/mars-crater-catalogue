@@ -20,13 +20,12 @@ def group_IOU_matrices(paths):
         iou_i = []
         for j,s_j in enumerate(surveys):
             if j!=i:
-                iou_i.append(iou.all_ious(s_i,s_j))
-        iou_i = np.concatenate(iou_i,axis=1)
+                iou_i.append(iou.all_ious_np(s_i,s_j))
+        iou_i = np.concatenate(iou_i,axis=1) #Compare 1 person's annotations to everyone else's
         iou_max_i = np.max(iou_i,axis=1)
         binary_IOU_i = iou_max_i>=0.5
         binary_IOUs.append(np.mean(binary_IOU_i))
         IOUs.append(np.mean(iou_max_i))
-
     return binary_IOUs, IOUs
 
 if __name__ == '__main__':
@@ -54,7 +53,6 @@ if __name__ == '__main__':
     print('  ____________')
     print('   MEAN :',np.round(np.mean(group_IOUs),4))
     print('\n')
-
 
     print('\n MEAN BINARY IoU (IoU treated as 1 if above 0.5)')
     print(' -----------------------------------------------')
