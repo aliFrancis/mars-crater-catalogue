@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" ?>
 <annotation>
   <filename>MC11E-D</filename>
   <source>
@@ -1166,10 +1166,10 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>919</xmin>
-      <ymin>1682</ymin>
-      <xmax>928</xmax>
-      <ymax>1691</ymax>
+      <xmin>980</xmin>
+      <ymin>1658</ymin>
+      <xmax>991</xmax>
+      <ymax>1669</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>
@@ -1180,10 +1180,10 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>790</xmin>
-      <ymin>1553</ymin>
-      <xmax>794</xmax>
-      <ymax>1557</ymax>
+      <xmin>260</xmin>
+      <ymin>1359</ymin>
+      <xmax>266</xmax>
+      <ymax>1365</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>
@@ -1194,10 +1194,10 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>1028</xmin>
-      <ymin>1434</ymin>
-      <xmax>1039</xmax>
-      <ymax>1445</ymax>
+      <xmin>1701</xmin>
+      <ymin>678</ymin>
+      <xmax>1706</xmax>
+      <ymax>683</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>
@@ -1208,122 +1208,10 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>280</xmin>
-      <ymin>1231</ymin>
-      <xmax>293</xmax>
-      <ymax>1244</ymax>
-    </bndbox>
-    <difficult>1</difficult>
-    <confidence>1</confidence>
-  </object>
-  <object>
-    <name>crater</name>
-    <pose>frontal</pose>
-    <truncated>0</truncated>
-    <occluded>0</occluded>
-    <bndbox>
-      <xmin>258</xmin>
-      <ymin>1358</ymin>
-      <xmax>262</xmax>
-      <ymax>1362</ymax>
-    </bndbox>
-    <difficult>1</difficult>
-    <confidence>1</confidence>
-  </object>
-  <object>
-    <name>crater</name>
-    <pose>frontal</pose>
-    <truncated>0</truncated>
-    <occluded>0</occluded>
-    <bndbox>
-      <xmin>1482</xmin>
-      <ymin>1346</ymin>
-      <xmax>1487</xmax>
-      <ymax>1351</ymax>
-    </bndbox>
-    <difficult>1</difficult>
-    <confidence>1</confidence>
-  </object>
-  <object>
-    <name>crater</name>
-    <pose>frontal</pose>
-    <truncated>0</truncated>
-    <occluded>0</occluded>
-    <bndbox>
-      <xmin>1293</xmin>
-      <ymin>1110</ymin>
-      <xmax>1295</xmax>
-      <ymax>1112</ymax>
-    </bndbox>
-    <difficult>1</difficult>
-    <confidence>1</confidence>
-  </object>
-  <object>
-    <name>crater</name>
-    <pose>frontal</pose>
-    <truncated>0</truncated>
-    <occluded>0</occluded>
-    <bndbox>
-      <xmin>722</xmin>
-      <ymin>386</ymin>
-      <xmax>729</xmax>
-      <ymax>393</ymax>
-    </bndbox>
-    <difficult>1</difficult>
-    <confidence>1</confidence>
-  </object>
-  <object>
-    <name>crater</name>
-    <pose>frontal</pose>
-    <truncated>0</truncated>
-    <occluded>0</occluded>
-    <bndbox>
-      <xmin>1992</xmin>
-      <ymin>17</ymin>
-      <xmax>2000</xmax>
-      <ymax>25</ymax>
-    </bndbox>
-    <difficult>1</difficult>
-    <confidence>1</confidence>
-  </object>
-  <object>
-    <name>crater</name>
-    <pose>frontal</pose>
-    <truncated>0</truncated>
-    <occluded>0</occluded>
-    <bndbox>
-      <xmin>1509</xmin>
-      <ymin>169</ymin>
-      <xmax>1513</xmax>
-      <ymax>173</ymax>
-    </bndbox>
-    <difficult>1</difficult>
-    <confidence>1</confidence>
-  </object>
-  <object>
-    <name>crater</name>
-    <pose>frontal</pose>
-    <truncated>0</truncated>
-    <occluded>0</occluded>
-    <bndbox>
-      <xmin>1027</xmin>
-      <ymin>1671</ymin>
-      <xmax>1034</xmax>
-      <ymax>1678</ymax>
-    </bndbox>
-    <difficult>1</difficult>
-    <confidence>1</confidence>
-  </object>
-  <object>
-    <name>crater</name>
-    <pose>frontal</pose>
-    <truncated>0</truncated>
-    <occluded>0</occluded>
-    <bndbox>
-      <xmin>243</xmin>
-      <ymin>6</ymin>
-      <xmax>252</xmax>
-      <ymax>15</ymax>
+      <xmin>1829</xmin>
+      <ymin>636</ymin>
+      <xmax>1836</xmax>
+      <ymax>643</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>
@@ -1544,10 +1432,10 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>980</xmin>
-      <ymin>1658</ymin>
-      <xmax>991</xmax>
-      <ymax>1669</ymax>
+      <xmin>919</xmin>
+      <ymin>1682</ymin>
+      <xmax>928</xmax>
+      <ymax>1691</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>
@@ -1558,10 +1446,10 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>260</xmin>
-      <ymin>1359</ymin>
-      <xmax>266</xmax>
-      <ymax>1365</ymax>
+      <xmin>790</xmin>
+      <ymin>1553</ymin>
+      <xmax>794</xmax>
+      <ymax>1557</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>
@@ -1572,10 +1460,10 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>1701</xmin>
-      <ymin>678</ymin>
-      <xmax>1706</xmax>
-      <ymax>683</ymax>
+      <xmin>1028</xmin>
+      <ymin>1434</ymin>
+      <xmax>1039</xmax>
+      <ymax>1445</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>
@@ -1586,10 +1474,10 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>1891</xmin>
-      <ymin>634</ymin>
-      <xmax>1893</xmax>
-      <ymax>636</ymax>
+      <xmin>280</xmin>
+      <ymin>1231</ymin>
+      <xmax>293</xmax>
+      <ymax>1244</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>
@@ -1600,10 +1488,94 @@
     <truncated>0</truncated>
     <occluded>0</occluded>
     <bndbox>
-      <xmin>1829</xmin>
-      <ymin>636</ymin>
-      <xmax>1836</xmax>
-      <ymax>643</ymax>
+      <xmin>258</xmin>
+      <ymin>1358</ymin>
+      <xmax>262</xmax>
+      <ymax>1362</ymax>
+    </bndbox>
+    <difficult>1</difficult>
+    <confidence>1</confidence>
+  </object>
+  <object>
+    <name>crater</name>
+    <pose>frontal</pose>
+    <truncated>0</truncated>
+    <occluded>0</occluded>
+    <bndbox>
+      <xmin>1482</xmin>
+      <ymin>1346</ymin>
+      <xmax>1487</xmax>
+      <ymax>1351</ymax>
+    </bndbox>
+    <difficult>1</difficult>
+    <confidence>1</confidence>
+  </object>
+  <object>
+    <name>crater</name>
+    <pose>frontal</pose>
+    <truncated>0</truncated>
+    <occluded>0</occluded>
+    <bndbox>
+      <xmin>722</xmin>
+      <ymin>386</ymin>
+      <xmax>729</xmax>
+      <ymax>393</ymax>
+    </bndbox>
+    <difficult>1</difficult>
+    <confidence>1</confidence>
+  </object>
+  <object>
+    <name>crater</name>
+    <pose>frontal</pose>
+    <truncated>0</truncated>
+    <occluded>0</occluded>
+    <bndbox>
+      <xmin>1992</xmin>
+      <ymin>17</ymin>
+      <xmax>2000</xmax>
+      <ymax>25</ymax>
+    </bndbox>
+    <difficult>1</difficult>
+    <confidence>1</confidence>
+  </object>
+  <object>
+    <name>crater</name>
+    <pose>frontal</pose>
+    <truncated>0</truncated>
+    <occluded>0</occluded>
+    <bndbox>
+      <xmin>1509</xmin>
+      <ymin>169</ymin>
+      <xmax>1513</xmax>
+      <ymax>173</ymax>
+    </bndbox>
+    <difficult>1</difficult>
+    <confidence>1</confidence>
+  </object>
+  <object>
+    <name>crater</name>
+    <pose>frontal</pose>
+    <truncated>0</truncated>
+    <occluded>0</occluded>
+    <bndbox>
+      <xmin>1027</xmin>
+      <ymin>1671</ymin>
+      <xmax>1034</xmax>
+      <ymax>1678</ymax>
+    </bndbox>
+    <difficult>1</difficult>
+    <confidence>1</confidence>
+  </object>
+  <object>
+    <name>crater</name>
+    <pose>frontal</pose>
+    <truncated>0</truncated>
+    <occluded>0</occluded>
+    <bndbox>
+      <xmin>243</xmin>
+      <ymin>6</ymin>
+      <xmax>252</xmax>
+      <ymax>15</ymax>
     </bndbox>
     <difficult>1</difficult>
     <confidence>1</confidence>

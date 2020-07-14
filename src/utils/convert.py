@@ -1,5 +1,6 @@
 import pandas as pd
 import xml.etree.ElementTree as ET
+from xml.dom import minidom
 import matplotlib.pyplot as plt
 from matplotlib.collections import EllipseCollection
 import sys
@@ -161,7 +162,7 @@ def clusters2PASCAL_VOC(clusters,surveys,img_name,out_dir=None):
         confidence.text = str(len(cluster))
 
 
-    data = ET.tostring(annotation,encoding='unicode')
+    data = minidom.parseString(ET.tostring(annotation,encoding='unicode')).toprettyxml(indent="  ")
     if out_dir is None:
         xmlfile = open("{}.xml".format(img_name), "w")
     else:
