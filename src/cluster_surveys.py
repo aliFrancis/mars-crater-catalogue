@@ -54,11 +54,13 @@ if __name__=='__main__':
     parser.add_argument('output_dir', help='Directory for outputted xmls')
     parser.add_argument('-d','--distance_metric', type=str, help='Distance function (defined in distance.py)', default=distance.negative_jaccard)
     parser.add_argument('-t','--threshold', type=float, help='Distance threshold at which to cluster', default=0.9)
+    parser.add_argument('-m','--min_D', type=float, help='Minimum diameter for annotation to be included', default=3)
     args = vars(parser.parse_args())
 
     annotation_dir = args['annotation_dir']
     output_dir  = args['output_dir']
     distance_metric = args['distance_metric']
+    min_D = args['min_D']
     if isinstance(distance_metric,str):
         try:
             distance_metric = getattr(distance,distance_metric)
@@ -79,7 +81,7 @@ if __name__=='__main__':
                 else:
                     annotation_register[image].append(os.path.join(root,path))
     for image_name,files in annotation_register.items():
-        df = [convert.xml2df(file,min_D=5) for file in files]
+        df = [convert.xml2df(file,min_D=min_D) for file in files]
         nodes = agglomerative(df,distance.negative_jaccard)
         clusters = clusters_at_distance(nodes,threshold)
         xml_out = convert.clusters2PASCAL_VOC(clusters,df,image_name,out_dir=output_dir)
