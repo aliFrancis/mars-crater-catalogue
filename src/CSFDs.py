@@ -22,11 +22,20 @@ def CSFD_plot(dfs,df_filter=None):
                 survey = df_filter(survey)
             annots_on_tile,_ = convert.df2np(survey)
             diams += list(annots_on_tile[:,4]*resolution)
-    bin_edges = np.power(10,np.linspace(np.log10(20),np.log10(1200),30))
+    print(np.min(diams),np.max(diams))
+    bin_edges = np.power(10,np.linspace(np.log10(18),np.log10(1939),28))
     dys,_ = np.histogram(diams,bin_edges)
     ys = np.cumsum(dys[::-1])[::-1]/(12*12**2) #divided by area in km^2
     smooth_ys = np.array([np.mean(ys[max(0,i-1):min(len(ys),i+2)]) for i in range(len(ys))])
-    return bin_edges, ys, smooth_ys
+
+    #check for zero-values at the end and remove (messes up log plot)
+    while True:
+        if ys[-1]==0:
+            bin_edges = bin_edges[:-1]
+            ys = ys[:-1]
+            smooth_ys = smooth_ys[:-1]
+        else:
+            return bin_edges, ys, smooth_ys
 
 def number_filter(n):
     def func(df):
@@ -41,9 +50,11 @@ if __name__=='__main__':
     import sys
     import matplotlib.pyplot as plt
 
-    annotation_dir = os.path.join(__file__,'../../data/annotations')
+    annotation_dir = os.path.join(os.path.dirname(__file__),'../data/annotations')
     raw_dfs = load_all_surveys(os.path.join(annotation_dir,'raw'))
     clustered_dfs = load_all_surveys(os.path.join(annotation_dir,'clustered'))
+
+
 
     c_bins,c_ys,c_smooth_ys = CSFD_plot(clustered_dfs)
     r_bins,r_ys,r_smooth_ys = CSFD_plot(raw_dfs)
@@ -63,8 +74,8 @@ if __name__=='__main__':
 
     ax.set_xlabel('Diameter ($m$)')
     ax.set_ylabel('Cumulative Size-Frequency ($km^{-2}$)')
-    ax.set_xlim(18,1.3*10**3)
-    ax.set_ylim(10**-3.5,10**1.2)
+    ax.set_xlim(18,2*10**3)
+    ax.set_ylim(10**-4,10**1.2)
     ax.grid(True,which='major',linestyle='-',alpha=0.9)
     ax.grid(True,which='minor',linestyle='--',alpha=0.6)
     ax.set_title('Cumulative Crater Size-Frequency Distribution of \nclustered and unclustered annotations\n')
