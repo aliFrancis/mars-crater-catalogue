@@ -6,7 +6,7 @@ from utils import convert
 if __name__=='__main__':
     clustered_dir = os.path.join(os.path.dirname(__file__),'..','data/annotations/clustered')
     surveys=[]
-    for path in os.listdir(clustered_dir):
+    for path in sorted(os.listdir(clustered_dir)):
         surveys.append(convert.xml2df(os.path.join(clustered_dir,path)))
         print(
             path+':',
