@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/185412766.svg)](https://zenodo.org/badge/latestdoi/185412766)
+
 # Mars Crater Catalogue
 
 ## Overview
@@ -32,4 +34,4 @@ All commands below generally assume you are in the root directory of the project
 
 ## Credits and Contributions
 
-If you found this resource useful in your own work, please cite our upcoming paper, link tbc
+If you found this resource useful in your own work, please see our upcoming paper and cite our work using the Zenodo DOI linked above.
