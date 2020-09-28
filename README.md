@@ -34,4 +34,4 @@ All commands below generally assume you are in the root directory of the project
 
 ## Credits and Contributions
 
-If you found this resource useful in your own work, please see our upcoming paper and cite our work using the Zenodo DOI linked above.
+If you found this resource useful in your own work, please [read our paper](https://www.mdpi.com/2306-5729/5/3/70) and cite our work using the Zenodo DOI linked above.
